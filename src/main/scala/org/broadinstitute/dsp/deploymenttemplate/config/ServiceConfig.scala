@@ -1,8 +1,5 @@
 package org.broadinstitute.dsp.deploymenttemplate.config
 
-import java.io.File
-
-import com.typesafe.config.ConfigFactory
 import com.typesafe.scalalogging.LazyLogging
 
 

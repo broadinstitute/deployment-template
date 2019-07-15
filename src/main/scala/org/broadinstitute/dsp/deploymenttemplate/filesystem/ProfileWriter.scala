@@ -1,14 +1,12 @@
 package org.broadinstitute.dsp.deploymenttemplate.filesystem
 
 import better.files._
-import File._
-import java.io.{File => JFile}
 
 import collection.JavaConverters._
 import com.typesafe.config.Config
 import com.typesafe.scalalogging.LazyLogging
 import org.broadinstitute.dsp.deploymenttemplate.config.ConfigHelpers
-import org.clapper.scalasti.{ST, STGroupDir, STGroupFile}
+import org.clapper.scalasti.ST
 
 import scala.util.{Failure, Success}
 
