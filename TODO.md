@@ -1,8 +1,8 @@
 
 
-- [ ] move away from build.sbt to a /project directory for
+- [x] move away from build.sbt to a /project directory for
 SBT build settings
-- [ ] set proper names and versions for the SBT build
+- [x] set proper names and versions for the SBT build
 - [ ] accept conf files as arguments; don't rely on
 hardcoded reference/application.conf
 - [ ] accept output directory as argument; don't rely on
