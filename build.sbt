@@ -24,9 +24,10 @@ version := "1.0"
 // Want to use a published library in your project?
 // You can define other libraries as dependencies in your build like this:
 libraryDependencies += "com.typesafe" % "config" % "1.3.4"
-libraryDependencies += "com.typesafe.scala-logging"    %% "scala-logging"       % "3.9.0"
+libraryDependencies += "com.typesafe.scala-logging"    %% "scala-logging"       % "3.9.2"
 libraryDependencies += "com.github.pathikrit"          %% "better-files"        % "3.8.0"
 libraryDependencies += "org.clapper" %% "scalasti" % "3.0.1"
+libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"
 
 // Here, `libraryDependencies` is a set of dependencies, and by using `+=`,
 // we're adding the cats dependency to the set of dependencies that sbt will go

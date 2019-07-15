@@ -12,7 +12,7 @@ hardcoded ./output location
 variable substitution
 - [ ] dynamically generate dynamic variable map; don't hardcode vars 
 - [ ] pull .tf templates from github, not hardcoded in this repo
-- [ ] use a real logging library instead of println
+- [x] use a real logging library instead of println
 - [ ] update service templates to latest/greatest
 - [ ] decide on Scala package name (org.broadinstitute...)
 - [ ] in general, clean up the code 

@@ -36,7 +36,7 @@ class ProfileWriter extends ConfigHelpers with LazyLogging {
 
     // list all files in template dir. for each, render or copy as-is
     profileTemplateDir.list.foreach{ templateFile =>
-      println(s"considering service file: $templateFile ...")
+      logger.info(s"considering service file: $templateFile ...")
       // custom logic per filename
       templateFile.name match {
         case "api-services.tf" | "variables.tf.ctmpl" =>
@@ -61,7 +61,7 @@ class ProfileWriter extends ConfigHelpers with LazyLogging {
 
     // now check individual features we might add to the profile
     featuresTemplateDir.list.foreach{ templateFile =>
-      println(s"considering feature file: $templateFile ...")
+      logger.info(s"considering feature file: $templateFile ...")
 
       val featureConfigKey = templateFile.name.split('.').head
       val featureConfig = getConfigObjectOrEmpty(config, featureConfigKey)

@@ -1,16 +1,19 @@
+package org.broadinstitute.dsp.deploymenttemplate
+
+import com.typesafe.scalalogging.LazyLogging
 import org.broadinstitute.dsp.deploymenttemplate.config.{ServiceConfig, ServiceList}
 import org.broadinstitute.dsp.deploymenttemplate.filesystem.ProfileWriter
 
-object Main extends App {
+object Main extends App with LazyLogging {
 
   val serviceList = new ServiceList().getServiceList
 
   serviceList.foreach{ serviceKey =>
-    println(s"$serviceKey...")
+    logger.info(s"$serviceKey...")
 
     val service = new ServiceConfig().getServiceConfig(serviceKey)
 
-    println(service)
+    logger.info(service.toString)
 
     new ProfileWriter().writeProfile(serviceKey, service.toConfig)
 

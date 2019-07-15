@@ -29,7 +29,7 @@ class ServiceList extends ConfigHelpers with LazyLogging {
     whitelist.foreach { wl =>
       val elided = serviceKeys.diff(wl)
       if (elided.nonEmpty)
-        println(s"service-whitelist config elides some services: $elided")
+        logger.info(s"service-whitelist config elides some services: $elided")
     }
 
     // use whitelist if present; else use iterated keys
