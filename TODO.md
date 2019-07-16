@@ -10,7 +10,7 @@ hardcoded ./output location
 - [x] allow for multiple different base service types (GCE, GAE, CF, etc)
 - [ ] provide a mechanism for determining which files get String Template
 variable substitution
-- [ ] dynamically generate dynamic variable map; don't hardcode vars 
+- [x] dynamically generate dynamic variable map; don't hardcode vars 
 - [ ] pull .tf templates from github, not hardcoded in this repo
 - [x] use a real logging library instead of println
 - [ ] update service templates to latest/greatest

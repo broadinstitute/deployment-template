@@ -11,7 +11,7 @@ object Main extends App with LazyLogging {
   serviceList.foreach{ serviceKey =>
     logger.info(s"$serviceKey...")
 
-    val service = new ServiceConfig().getServiceConfig(serviceKey)
+    val service = ServiceConfig.getServiceConfig(serviceKey)
 
     logger.info(service.toString)
 

@@ -2,11 +2,12 @@ package org.broadinstitute.dsp.deploymenttemplate.filesystem
 
 import better.files._
 
-import collection.JavaConverters._
 import com.typesafe.config.Config
 import com.typesafe.scalalogging.LazyLogging
+import org.antlr.runtime.Token
 import org.broadinstitute.dsp.deploymenttemplate.config.ConfigHelpers
 import org.clapper.scalasti.ST
+import org.stringtemplate.v4.compiler.STLexer
 
 import scala.util.{Failure, Success}
 
@@ -23,15 +24,6 @@ class ProfileWriter extends ConfigHelpers with LazyLogging {
     profileDir.delete(swallowIOExceptions = true)
     profileDir.createIfNotExists(asDirectory = true, createParents = true)
 
-    // now, define template values to use in replacements
-    val apiServicesString = config.getStringList("api-services").asScala.map(s => '"' + s + '"').mkString(",")
-    val templateValues = Map(
-      "api_services" -> apiServicesString,
-      "service_name_env" -> serviceName.toUpperCase,
-      "instance_num_hosts" -> config.getNumber("instance_num_hosts"),
-      "instance_size" -> config.getString("instance_size")
-    )
-
     // define profile template dir, based on service type
     val serviceType = config.getString("service_type")
     val profileTemplateDir = File(s"src/main/resources/templates/service/${serviceType.toLowerCase}")
@@ -45,8 +37,21 @@ class ProfileWriter extends ConfigHelpers with LazyLogging {
           // read file contents
           val fileContents = templateFile.contentAsString
           // create ST template, with values from config
-          val template = ST(fileContents).addAttributes(templateValues)
+          val st = ST(fileContents)
+
+          // find all replaceable attributes in this template
+          val tokenStream = st.nativeTemplate.impl.tokens
+          val allTokens:List[Token] = (0 to tokenStream.range).map { i =>
+            tokenStream.get(i)
+          }.toList
+          val attrNames:Set[String] = allTokens.filter(_.getType == STLexer.ID).map(_.getText).toSet
+
+          // find all config values for these attributes
+          val templateValues = attrNames.map { attr => attr -> config.getString(attr)}.toMap
+          logger.info(s"using $templateValues")
+
           // render template
+          val template = st.addAttributes(templateValues)
           val rendered:String = template.render() match {
             case Success(s) => s
             case Failure(ex) =>

@@ -1,9 +1,11 @@
 package org.broadinstitute.dsp.deploymenttemplate.config
 
+import com.typesafe.config.ConfigFactory
+
+import collection.JavaConverters._
 import com.typesafe.scalalogging.LazyLogging
 
-
-class ServiceConfig extends ConfigHelpers with LazyLogging {
+object ServiceConfig extends ConfigHelpers with LazyLogging {
 
   def getServiceConfig(serviceName: String) = {
     val baseConfig = new BaseConfigLoader().getBaseConfig
@@ -16,12 +18,20 @@ class ServiceConfig extends ConfigHelpers with LazyLogging {
     // see if we have a config specific to this service
     val serviceSpecific = getConfigObjectOrEmpty(baseConfig, s"services.$serviceName")
 
-    // final service config is the layering of service-specific on top of service-defaults
+    // layer service-specific on top of service-defaults
     val service = serviceSpecific
       .withFallback(serviceDefault)
 
-    service
-  }
+    // finally, munge a few special cases
+    val apiServicesString = service.toConfig.getStringList("api-services").asScala.map(s => '"' + s + '"').mkString(",")
+    val serviceNameEnv = serviceName.toUpperCase
 
+    val extras = ConfigFactory.parseMap(Map(
+      "service_name_env" -> serviceNameEnv,
+      "api_services" -> apiServicesString
+    ).asJava)
+
+    service.withFallback(extras)
+  }
 
 }
