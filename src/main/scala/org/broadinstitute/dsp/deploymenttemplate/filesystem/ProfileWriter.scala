@@ -33,7 +33,7 @@ class ProfileWriter extends ConfigHelpers with LazyLogging {
       logger.info(s"considering service file: $templateFile ...")
       // custom logic per filename
       templateFile.name match {
-        case "api-services.tf" | "variables.tf.ctmpl" =>
+        case templateName if templateName.endsWith(".st") =>
           // read file contents
           val fileContents = templateFile.contentAsString
           // create ST template, with values from config
@@ -59,7 +59,7 @@ class ProfileWriter extends ConfigHelpers with LazyLogging {
               throw ex
           }
           // write to target dir
-          val targetFile = profileDir/templateFile.name
+          val targetFile = profileDir/templateName.substring(0, templateName.length-3)
           targetFile.write(rendered)
         case _ =>
           templateFile.copyToDirectory(profileDir)

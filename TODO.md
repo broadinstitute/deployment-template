@@ -8,7 +8,7 @@ hardcoded reference/application.conf
 - [ ] accept output directory as argument; don't rely on
 hardcoded ./output location
 - [x] allow for multiple different base service types (GCE, GAE, CF, etc)
-- [ ] provide a mechanism for determining which files get String Template
+- [x] provide a mechanism for determining which files get String Template
 variable substitution
 - [x] dynamically generate dynamic variable map; don't hardcode vars 
 - [ ] pull .tf templates from github, not hardcoded in this repo
