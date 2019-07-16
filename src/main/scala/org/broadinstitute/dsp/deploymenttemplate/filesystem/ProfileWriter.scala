@@ -12,7 +12,7 @@ import scala.util.{Failure, Success}
 
 class ProfileWriter extends ConfigHelpers with LazyLogging {
 
-  val profileTemplateDir = File("src/main/resources/templates/service")
+
   val featuresTemplateDir = File("src/main/resources/templates/features")
 
   // TODO: allow base dir to be passed in!
@@ -31,6 +31,10 @@ class ProfileWriter extends ConfigHelpers with LazyLogging {
       "instance_num_hosts" -> config.getNumber("instance_num_hosts"),
       "instance_size" -> config.getString("instance_size")
     )
+
+    // define profile template dir, based on service type
+    val serviceType = config.getString("service_type")
+    val profileTemplateDir = File(s"src/main/resources/templates/service/${serviceType.toLowerCase}")
 
     // list all files in template dir. for each, render or copy as-is
     profileTemplateDir.list.foreach{ templateFile =>

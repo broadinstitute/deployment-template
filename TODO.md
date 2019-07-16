@@ -7,7 +7,7 @@ SBT build settings
 hardcoded reference/application.conf
 - [ ] accept output directory as argument; don't rely on
 hardcoded ./output location
-- [ ] allow for multiple different base service types (GCE, GAE, CF, etc)
+- [x] allow for multiple different base service types (GCE, GAE, CF, etc)
 - [ ] provide a mechanism for determining which files get String Template
 variable substitution
 - [ ] dynamically generate dynamic variable map; don't hardcode vars 
